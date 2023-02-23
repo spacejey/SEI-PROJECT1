@@ -54,20 +54,7 @@ button {
   border: 3px solid rgb(81, 81, 81);
   box-shadow: 1px 1px 1px 1px #b7b7b7
   
-}
-
-.score {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 140px;
-  height: 40px;
-  border-radius: 10px;
-  margin-top: 35px;
-  font-size: 18px;
-  background-color: rgb(245, 245, 245);
-  border: 3px solid rgb(81, 81, 81);
-  box-shadow: 1px 1px 1px 1px #b7b7b7
+  
 }
 
 .grid-wrapper {
@@ -150,6 +137,7 @@ button {
   width: 50px;
   position: absolute;
   left: -3%;
+  top: 60%;
 }
 
 
@@ -157,24 +145,20 @@ button {
   width: 100px;
   position: absolute;
   top: 88%;
-  left: -13%;
+  left: -16%;
 }
 
 .plant3 {
   width: 80px;
   position: absolute;
-  top: 95%;
-  left: 90%;
+  top: 97%;
+  left: 93%;
 }
 
 
 .sidebar1, .sidebar2 {
   margin-left: 25px;
   margin-right: 25px;
-}
-
-h2 {
-  font-size: 20px;
 }
 
 .rule-box1, .rule-box2 {
@@ -189,7 +173,7 @@ h2 {
 }
 
 h2 {
-  margin: 10px 0 37px 0;
+  margin: 10px 0 0 0;
   font-family: 'Monofett', cursive;
   font-size: 44px;
 }
@@ -213,7 +197,7 @@ h3 {
 
 .sidebar-snake-img {
   width: 140px;
-  margin-top: 20px;
+  margin-top: 6px;
 }
 
 .runfast {
