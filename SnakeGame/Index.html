@@ -10,11 +10,13 @@
     <script src="./script/app.js" charset="utf-8"></script>
   </head>
   <body>
+    <audio loop class="myAudio" src="./audio/bgm.mp3"></audio>
     <section id="header">
       <div class="title">
         <img class="title-snake-img" src="./assets/dance snake.gif" alt="">
         <h1>HUNGRY SNAKE</h1>
         <button class="start">Let's Eat it!</button>
+        <div class="scoreBtn"></div>
       </div>
     </section>
 
@@ -34,6 +36,7 @@
       </div>
       <div class="grid-wrapper">
         <div class="grid"></div>
+        <audio id="eatingSound"></audio>
         <img class="plant1" src="/assets/plant1.png" alt="">
         <img class="plant3" src="/assets/plant2.png" alt="">
       </div>
@@ -52,6 +55,7 @@
             <a href="https://git.generalassemb.ly/eunyeongjeong" target="_blank">
               <img class="github"src="/assets/github.png" alt=""></a>
             </a> 
+            <audio id="endGame"></audio>
           </div>
           <div class="myAdress">
             <p><span class="made"> Made by </span>spacejey</p>

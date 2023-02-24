@@ -2,16 +2,23 @@ function init() {
 
   const grid = document.querySelector('.grid')
   const button = document.querySelector('button')
-
+  const scoreBtn = document.querySelector('.scoreBtn')
+  const audio = document.querySelector('.myAudio')
+  const eatingSound = document.querySelector('#eatingSound')
+  const endGame = document.querySelector('#endGame')
   
   //elements
-  const snakeStart = [305, 306]
+  const snakeStart = [305, 306, 307, 308]
   let snake = snakeStart
   let currentFood
   let score = 0
   let activeSnake
-  let snakeDirection = 'right'
+  let snakeDirection = 1
+  let speed = 300
+  scoreBtn.style.display = 'none'
+  
 
+  
   //Grid Elements
   const width = 20
   const totalCell = width * width
@@ -27,46 +34,49 @@ function init() {
     }
     addFood(currentFood)
     addSnake()
-  }
-  
-  //!게임 시작
-  function defaultBtn() {
-    button.innerText = 'Restart!'
-    reset()
-    addFood()
-    addSnake()
+    playSound()
   }
 
-  function startGame(e){
-    button.innerText = `score! ${score}`
-    addSnake
+  function playSound(){
+    audio.autoplay = true
+    audio.play()
+  }
+  playSound()
+
+
+  //!게임 시작
+  function startGame(){
+    button.style.display = 'none'
+    scoreBtn.style.display = 'block'
+    scoreBtn.innerText = `score! ${score}`
+    addSnake()
     snakeMovementTimer()
   }
   
+  
   function gameOver(){
     clearInterval(activeSnake)
-    alert('Game Over!')
-    defaultBtn()
+    confirm('Game Over!')
+    location.reload()
   }
-  
-  function reset() {
-    removeSnake()
-    removeFood()
-  }
-  
+
+
+
   //! when snake and food is on the same cell
   function snakeEat(){
-
+    if (snake.length % 5 === 0){
+      speedUp()
+    } 
     if (cells[snake[0]].classList.contains('food')) {
-      console.log('catch')
+      eatingSound.src = './audio/eatingSound.mp3'
+      eatingSound.play()
       removeFood()
       addFood()
       score += 10
-      button.innerText = `score! ${score}`
+      scoreBtn.innerText = `score! ${score}`
       snake.push(snake[0])
     }
   }
-
 
   //! add snake
   function addSnake(){
@@ -85,58 +95,51 @@ function init() {
     activeSnake = setInterval(() => {
       removeSnake()
       moveSnake()
-    }, 2000 / 10)
+    }, speed)
+  }
 
+  function speedUp() {
+    clearInterval(activeSnake)
+    speed *= 0.98
+    activeSnake = setInterval(moveSnake, speed)
   }
 
   function changeSnakeDirection(e){
-
+    e.preventDefault()
     const right = 39
     const left = 37
     const up = 38
     const down = 40
 
-    if (e.keyCode === right) {
-      snakeDirection = 'right'
-    } else if (e.keyCode === left) {
-      snakeDirection = 'left'
-    } else if (e.keyCode === up) {
-      snakeDirection = 'up'
-    } else if (e.keyCode === down) {
-      snakeDirection = 'down'
+    if (e.keyCode === right && snakeDirection !== -1) {
+      snakeDirection = 1
+    } else if (e.keyCode === left && snakeDirection !== 1) {
+      snakeDirection = -1
+    } else if (e.keyCode === up && snakeDirection !== +width) {
+      snakeDirection = -width
+    } else if (e.keyCode === down && snakeDirection !== -width) {
+      snakeDirection = +width
     }
   }
   
 
   function moveSnake(){
-      
-    if (snakeDirection === 'right' && snake[0] % width === width - 1){
+    if (snakeDirection === 1 && snake[0] % width === width - 1){
       gameOver()
-    } else if (snakeDirection === 'left' && snake[0] % width === 0){
+    } else if (snakeDirection === -1 && snake[0] % width === 0){
       gameOver()
-    } else if (snakeDirection === 'up' && snake[0] < width){
+    } else if (snakeDirection === -width && snake[0] < width){
       gameOver()
-    } else if (snakeDirection === 'down' && snake[0] + width >= totalCell){
+    } else if (snakeDirection === +width && snake[0] + width >= totalCell){
+      gameOver()
+    } else if (cells[snake[0] + snakeDirection].classList.contains('snake')) {
       gameOver()
     } else {
       removeSnake()
       snake.pop()
-      if (snakeDirection === 'right'){
-        console.log('snake', snake[0] + 1)
-        snake.unshift(snake[0] + 1)
-      } else if (snakeDirection === 'left'){
-        snake.unshift(snake[0] - 1)
-      } else if (snakeDirection === 'up'){
-        snake.unshift(snake[0] - width)
-      } else if (snakeDirection === 'down'){
-        snake.unshift(snake[0] + width)
-      } 
-      if (cells[snake[0]].classList.contains('snake')) {
-        gameOver()
-      }
+      snake.unshift(snake[0] + snakeDirection)
       addSnake()
     }
-    console.log(snake)
     snakeEat()
   }
 
@@ -148,7 +151,6 @@ function init() {
     const food = Math.floor(Math.random() * totalCell)
     currentFood = cells[food]
     currentFood.classList.add('food')
-    console.log(currentFood.dataset['index'])
   }
 
   function removeFood() {
@@ -163,8 +165,11 @@ function init() {
 
 
 
+
   document.addEventListener('keydown', changeSnakeDirection)
   button.addEventListener('click', startGame)
+  button.addEventListener('click', playSound)
+
 
   createGrid()
 } 
