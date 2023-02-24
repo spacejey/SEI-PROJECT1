@@ -86,7 +86,7 @@ button, .scoreBtn {
 }
 
 .grid div {
-  border: 2px solid rgb(23, 142, 120);
+  border: 1px solid rgb(23, 142, 120);
   margin: 0px;
   border-radius: 5px;
   flex-grow: 1;

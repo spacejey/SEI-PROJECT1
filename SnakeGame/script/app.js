@@ -8,7 +8,7 @@ function init() {
   const endGame = document.querySelector('#endGame')
   
   //elements
-  const snakeStart = [305, 306, 307, 308]
+  const snakeStart = [305, 306]
   let snake = snakeStart
   let currentFood
   let score = 0
